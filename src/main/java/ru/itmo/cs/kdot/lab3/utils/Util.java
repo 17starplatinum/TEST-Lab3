@@ -1,6 +1,5 @@
 package ru.itmo.cs.kdot.lab3.utils;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,11 +15,12 @@ import java.util.List;
 public class Util {
 
     public static final String CHROME_SYSTEM_PROPERTY_NAME = "webdriver.chrome.driver";
-    public static final String CHROME_SYSTEM_PROPERTY_PATH = "/resources/chromedriver.exe";
+    public static final String CHROME_SYSTEM_PROPERTY_PATH = System.getProperty("user.dir") + "/src/main/resources/chromedriver.exe";
     public static final String BASE_URL = "https://domaintools.com";
 
     public static void prepareDrivers() {
         System.setProperty(CHROME_SYSTEM_PROPERTY_NAME, CHROME_SYSTEM_PROPERTY_PATH);
+
     }
 
     public static List<WebDriver> getDrivers() {
@@ -34,7 +34,7 @@ public class Util {
     }
 
     public static WebElement getElementBySelector(WebDriver driver, By selector) {
-        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofMillis(200));
+        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(3));
         return driverWait.until(ExpectedConditions.visibilityOfElementLocated(selector));
     }
 
