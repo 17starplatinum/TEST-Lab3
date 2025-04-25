@@ -13,14 +13,17 @@ public class WhoisPage extends Page {
     private static final String NEW_URL = Util.BASE_URL.split("//")[0] + "research." + Util.BASE_URL.split("//")[1];
     public WhoisPage(WebDriver webDriver) {
         super(webDriver);
+        webDriver.manage().window().maximize();
         webDriver.get(NEW_URL);
         Util.waitUntilPageLoads(webDriver, Duration.ofSeconds(1));
     }
 
-    public ShoppingCartPage getShoppingCartPage() {
-        WebElement btn = Util.getElementBySelector(webDriver, By.xpath("//a[@class='MuiTypography-root-143 MuiLink-root-138 MuiLink-underlineHover-140 Linkstyles__Container-sc-18r150c-0 urfVZ Buttonstyles__Link-sc-17xhqrw-2 joVtAb MuiTypography-colorPrimary-166']"));
+    public ResultPage getResultPage(String url) {
+        WebElement form = webDriver.findElement(By.xpath("//input[@placeholder='Enter a domain or IP address...']"));
+        form.sendKeys(url);
+        WebElement btn = webDriver.findElement(By.xpath("//span[text()='Search']"));
         btn.click();
         Util.waitUntilPageLoads(webDriver, Duration.ofSeconds(1));
-        return new ShoppingCartPage(webDriver);
+        return new ResultPage(webDriver, url);
     }
 }
